@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import { createCategory, editCategory    } from '../../api/Project1VendingMachine/apicategories';
+import { createCategory, editCategory, deleteCategory } from '../../api/Project1VendingMachine/apicategories';
 
 function CreateCategoryModal({ show, onHide,  onCategoryRefresh,category }) {
     const [name, setName] = useState('');

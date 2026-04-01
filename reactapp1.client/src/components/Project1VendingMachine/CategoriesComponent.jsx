@@ -4,6 +4,8 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { getCategories } from "../../api/Project1VendingMachine/apicategories";
 import CreateCategoryModal from "./CreateCategoryModal";
+import {   deleteCategory } from '../../api/Project1VendingMachine/apicategories';
+
 function CategoriesComponent() {
     const [categories, setCategories] = useState([]);
     const [modalShow, setModalShow] = useState(false);
@@ -33,6 +35,15 @@ function CategoriesComponent() {
         setSelectedCategory(cat);
         setModalShow(true);
     };
+    const handleDelete =async (catId) => {
+        try {
+            await deleteCategory(catId);
+            await handleRefresh(); // ?? refresh list
+        } catch (err) {
+            console.error(err);
+            alert("Delete failed");
+        }
+    }
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -42,7 +53,6 @@ function CategoriesComponent() {
     }
     return (
         <div className="container">
-
             <h2>Categories</h2>
             <Button onClick={() => setModalShow(true)}>
                 Add Category
@@ -53,7 +63,6 @@ function CategoriesComponent() {
                 category={selectedCategory} 
                 onCategoryRefresh={handleRefresh}
             />
-
             <Table striped bordered hover variant="dark" responsive>
                 <thead>
                     <tr>
@@ -61,22 +70,18 @@ function CategoriesComponent() {
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    
-
+                <tbody>                  
                     {categories.map(cat => (
                         <tr key={cat.id}>
                             <td className="w-75">{cat.name}</td>
                             <td className="w-25" >
-                                <Button  variant="warning" onClick={()=>handleEdit(cat) }>Edit</Button>
-                                <Button   variant="danger">Delete</Button>
+                                <Button variant="warning" onClick={() => handleEdit(cat)}>Edit</Button>
+                                <Button variant="danger" onClick={()=>handleDelete(cat.id) }>Delete</Button>
                             </td>
                         </tr>
                     ))}
- 
                 </tbody>
-            </Table>
-            
+            </Table>            
         </div>
     );
 } 
