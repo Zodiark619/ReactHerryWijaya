@@ -1,14 +1,13 @@
 import { useState } from "react"
  import CategoriesComponent from "./components/Project1VendingMachine/CategoriesComponent"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Coba from "./components/Project1VendingMachine/Coba";
+import Coba from "./components/Project1VendingMachine/CreateCategoryModal";
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Coba />} />
-
-                <Route path="/categoriescomponent" element={<CategoriesComponent />} />
+               
+                <Route path="/" element={<CategoriesComponent />} />
             </Routes>
         </BrowserRouter>
     );
