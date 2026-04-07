@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReactApp1.Server.Data;
 using ReactApp1.Server.Models.Project1VendingMachine;
+using ReactApp1.Server.Models.Project1VendingMachine.Stripe;
+using Stripe;
+using Stripe.Checkout;
+
 
 namespace ReactApp1.Server.Controllers.Project1VendingMachine
 {
@@ -16,6 +20,74 @@ namespace ReactApp1.Server.Controllers.Project1VendingMachine
         {
             this.dbContext = dbContext;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+        #region stripe
+        [HttpPost("payment/create-session")]
+        public IActionResult CreateSession([FromBody] CheckoutRequest request)
+        {
+            var options = new SessionCreateOptions
+            {
+                PaymentMethodTypes = new List<string> { "card" },
+                Mode = "payment",
+                LineItems = new List<SessionLineItemOptions>
+        {
+            new SessionLineItemOptions
+            {
+                Quantity = 1,
+                PriceData = new SessionLineItemPriceDataOptions
+                {
+                    Currency = "usd",
+                    UnitAmount = 1000, // $10.00
+                    ProductData = new SessionLineItemPriceDataProductDataOptions
+                    {
+                        Name = "Test Item"
+                    }
+                }
+            }
+        },
+                SuccessUrl = "http://localhost:3000/success",
+                CancelUrl = "http://localhost:3000/cancel"
+            };
+
+            var service = new SessionService();
+            var session = service.Create(options);
+
+            return Ok(new { sessionId = session.Id });
+        }
+        [HttpPost("webhook")]
+        public async Task<IActionResult> StripeWebhook()
+        {
+            var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+
+            var stripeEvent = EventUtility.ConstructEvent(
+                json,
+                Request.Headers["Stripe-Signature"],
+                "your_webhook_secret"
+            );
+
+            if (stripeEvent.Type == "checkout.session.completed")
+            {
+                var session = stripeEvent.Data.Object as Session;
+
+                // ✅ This is where payment is CONFIRMED
+                // Save order, update DB, etc.
+            }
+
+            return Ok();
+        }
+
+        #endregion
 
         #region category
         [HttpGet("Category/GetAll")]

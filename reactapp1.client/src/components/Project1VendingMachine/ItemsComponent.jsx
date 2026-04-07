@@ -5,7 +5,8 @@ import Table from 'react-bootstrap/Table';
 import { getCategories, getItems } from "../../api/Project1VendingMachine/apicategories";
 import CreateItemModal from "./CreateItemModal";
 import { deleteItem } from '../../api/Project1VendingMachine/apicategories';
-
+//import CheckoutButton from "./CheckoutButton";
+ 
 function ItemsComponent() {
     const [categories, setCategories] = useState([]);
     const [modalShow, setModalShow] = useState(false);
@@ -13,7 +14,7 @@ function ItemsComponent() {
 
     const [selectedItem, setSelectedItem] = useState(null);
     const [items, setItems] = useState([]);
-
+    // 
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -67,6 +68,7 @@ function ItemsComponent() {
           <Button onClick={() => setModalShow(true)}>
               Add Item
           </Button>
+          {/*<CheckoutButton/>*/}
           <CreateItemModal
               show={modalShow}
               onHide={() => { setModalShow(false); setSelectedItem(null) }}

@@ -3,6 +3,7 @@ import { useState } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Coba from "./components/Project1VendingMachine/CreateCategoryModal";
 import ItemsComponent from "./components/Project1VendingMachine/ItemsComponent";
+import Bobo from "./components/exercise/Bobo";
 function App() {
     return (
         <BrowserRouter>
@@ -10,6 +11,8 @@ function App() {
                
                 <Route path="/" element={<CategoriesComponent />} />
                 <Route path="/a" element={<ItemsComponent />} />
+                <Route path="/bobo" element={<Bobo />} />
+
             </Routes>
         </BrowserRouter>
     );
