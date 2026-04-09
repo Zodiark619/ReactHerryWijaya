@@ -4,8 +4,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Coba from "./components/Project1VendingMachine/CreateCategoryModal";
 import ItemsComponent from "./components/Project1VendingMachine/ItemsComponent";
 import Bobo from "./components/exercise/Bobo";
+import { store } from "./components/exercise/store";
+import {Provider } from "react-redux"
 function App() {
     return (
+        <Provider store={store}>
+
         <BrowserRouter>
             <Routes>
                
@@ -14,7 +18,9 @@ function App() {
                 <Route path="/bobo" element={<Bobo />} />
 
             </Routes>
-        </BrowserRouter>
+            </BrowserRouter>
+        </Provider>
+
     );
 
 
