@@ -4,12 +4,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Coba from "./components/Project1VendingMachine/CreateCategoryModal";
 import ItemsComponent from "./components/Project1VendingMachine/ItemsComponent";
 import Bobo from "./components/exercise/Bobo";
-import { store } from "./components/exercise/store";
+//import { store } from "./components/exercise/store";
+import { store } from "./components/exercise/destination/store";
 import {Provider } from "react-redux"
+import { destinationAPI } from "./components/exercise/destination/DestinationApi";
+import {ApiProvider } from "@reduxjs/toolkit/query/react"
 function App() {
     return (
-        <Provider store={store}>
-
+        //<Provider store={store}>
+        // <ApiProvider api={destinationAPI }>
+        <Provider store={store }>
         <BrowserRouter>
             <Routes>
                
@@ -18,8 +22,10 @@ function App() {
                 <Route path="/bobo" element={<Bobo />} />
 
             </Routes>
-            </BrowserRouter>
-        </Provider>
+        </BrowserRouter>
+            </Provider>
+       // </ApiProvider>
+        //</Provider>
 
     );
 
