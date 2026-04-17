@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReactApp1.Server.Data;
 
@@ -11,9 +12,11 @@ using ReactApp1.Server.Data;
 namespace ReactApp1.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260412130044_yyy")]
+    partial class yyy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -347,7 +350,7 @@ namespace ReactApp1.Server.Migrations
                             Id = 1,
                             Category = "Appetizer",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "images/carrot love.jpg",
+                            Image = "images/spring_roll.jpg",
                             Name = "Spring Roll",
                             Price = 7.9900000000000002,
                             SpecialTag = ""
@@ -357,7 +360,7 @@ namespace ReactApp1.Server.Migrations
                             Id = 2,
                             Category = "Appetizer",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "images/hakka noodles.jpg",
+                            Image = "images/samosa.jpg",
                             Name = "Samosa",
                             Price = 8.9900000000000002,
                             SpecialTag = ""
@@ -367,7 +370,7 @@ namespace ReactApp1.Server.Migrations
                             Id = 3,
                             Category = "Appetizer",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "images/idli.jpg",
+                            Image = "images/soup.jpg",
                             Name = "Soup",
                             Price = 8.9900000000000002,
                             SpecialTag = "Best Seller"
@@ -377,7 +380,7 @@ namespace ReactApp1.Server.Migrations
                             Id = 4,
                             Category = "Entrée",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "images/malai kofta.jpg",
+                            Image = "images/noodles.jpg",
                             Name = "Noodles",
                             Price = 10.99,
                             SpecialTag = ""
@@ -387,7 +390,7 @@ namespace ReactApp1.Server.Migrations
                             Id = 5,
                             Category = "Entrée",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "images/paneer pizza.jpg",
+                            Image = "images/pav_bhaji.jpg",
                             Name = "Pav Bhaji",
                             Price = 12.99,
                             SpecialTag = "Top Rated"
@@ -397,7 +400,7 @@ namespace ReactApp1.Server.Migrations
                             Id = 6,
                             Category = "Entrée",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "images/paneer tikka.jpg",
+                            Image = "images/pizza.jpg",
                             Name = "Paneer Pizza",
                             Price = 11.99,
                             SpecialTag = ""
@@ -407,7 +410,7 @@ namespace ReactApp1.Server.Migrations
                             Id = 7,
                             Category = "Dessert",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "images/pani puri.jpg",
+                            Image = "images/mango_paradise.jpg",
                             Name = "Mango Paradise",
                             Price = 13.99,
                             SpecialTag = "Chef's Special"
@@ -417,7 +420,7 @@ namespace ReactApp1.Server.Migrations
                             Id = 8,
                             Category = "Dessert",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "images/rasmalai.jpg",
+                            Image = "images/carrot_love.jpg",
                             Name = "Carrot Love",
                             Price = 4.9900000000000002,
                             SpecialTag = ""
@@ -427,91 +430,11 @@ namespace ReactApp1.Server.Migrations
                             Id = 9,
                             Category = "Dessert",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "images/spring roll.jpg",
+                            Image = "images/sweet_rolls.jpg",
                             Name = "Sweet Rolls",
                             Price = 4.9900000000000002,
                             SpecialTag = "Chef's Special"
                         });
-                });
-
-            modelBuilder.Entity("ReactApp1.Server.Models.Project2Exercise.OrderDetail", b =>
-                {
-                    b.Property<int>("OrderDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
-
-                    b.Property<string>("ItemName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MenuItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderHeaderId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Rating")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderDetailId");
-
-                    b.HasIndex("MenuItemId");
-
-                    b.HasIndex("OrderHeaderId");
-
-                    b.ToTable("OrderDetails");
-                });
-
-            modelBuilder.Entity("ReactApp1.Server.Models.Project2Exercise.OrderHeader", b =>
-                {
-                    b.Property<int>("OrderHeaderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderHeaderId"));
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("OrderTotal")
-                        .HasColumnType("float");
-
-                    b.Property<string>("PickUpEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PickUpName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PickUpPhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TotalItem")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderHeaderId");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("OrderHeaders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -576,42 +499,9 @@ namespace ReactApp1.Server.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("ReactApp1.Server.Models.Project2Exercise.OrderDetail", b =>
-                {
-                    b.HasOne("ReactApp1.Server.Models.Project2Exercise.MenuItem", "MenuItem")
-                        .WithMany()
-                        .HasForeignKey("MenuItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReactApp1.Server.Models.Project2Exercise.OrderHeader", null)
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderHeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MenuItem");
-                });
-
-            modelBuilder.Entity("ReactApp1.Server.Models.Project2Exercise.OrderHeader", b =>
-                {
-                    b.HasOne("ReactApp1.Server.Models.Project2Exercise.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-                });
-
             modelBuilder.Entity("ReactApp1.Server.Models.Project1VendingMachine.Category", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("ReactApp1.Server.Models.Project2Exercise.OrderHeader", b =>
-                {
-                    b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
         }

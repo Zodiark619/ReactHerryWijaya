@@ -8,4 +8,9 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\Project2Exercise\components\ui\" />
+    <Folder Include="src\Project2Exercise\components\orders\" />
+    <Folder Include="src\Project2Exercise\store\slice\" />
+  </ItemGroup>
 </Project>

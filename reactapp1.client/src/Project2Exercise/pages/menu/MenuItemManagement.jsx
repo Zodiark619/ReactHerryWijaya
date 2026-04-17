@@ -1,0 +1,182 @@
+import { useState } from "react";
+import MenuItemModal from "../../components/menuItem/MenuItemModal";
+import MenuItemTable from "../../components/menuItem/MenuItemTable";
+import { useGetMenuItemsQuery, useCreateMenuItemMutation, useUpdateMenuItemMutation, useDeleteMenuItemMutation } from "../../store/api/menuItemApi"
+import { toast } from "react-toastify"
+import Swal from "sweetalert2"
+function MenuItemManagement() {
+    const { data: menuItems = [], isLoading, error, refetch } = useGetMenuItemsQuery();
+    const [showModal, setShowModal] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [createMenuItem] = useCreateMenuItemMutation()
+    const [editMenuItem] = useUpdateMenuItemMutation()
+    const [deleteMenuItem] = useDeleteMenuItemMutation()
+    const [selectedMenuItem, setSelectedMenuItem] = useState(null)
+    const [formData, setFormData] = useState({
+        name: "",
+        description: "",
+        specialTag: "",
+        category: "",
+        price: "",
+        image:null
+    })
+
+    const handleCloseModal = () => {
+        setShowModal(false)
+    } 
+    const handleInputChange = (e) => {
+        const { name, value, files } = e.target
+        if (name === "image") {
+            setFormData((prev) => ({ ...formData, [name]: files[0] }))
+
+        } else {
+
+        setFormData((prev) => ({ ...formData, [name]:value}))
+        }
+    }
+    const ResetForm = () => {
+        setFormData(  {
+            name: "",
+                description: "",
+                    specialTag: "",
+                        category: "",
+                            price: "",
+                                image: null
+        })
+    }
+    const handleAddMenuItem = async () => {
+        ResetForm()
+        setSelectedMenuItem(null)
+        setShowModal(true)
+    }
+    //const handleEditMenuItem = async (item) => {
+    //    setSelectedMenuItem(item)
+    //    setShowModal(true)
+
+    //}
+    const handleDeleteMenuItem = async (item) => {
+       const result=await Swal.fire({
+            title: "Are you sure?",
+            text: "You wont revert this?",
+            icon: "warning",
+            showCancelButton:true,
+            confirmButtonColor:"#3085d6",
+            cancelButtonColor:"#d33",
+            confirmButtonText:"Yes, delete this!"
+       })
+        if (result.isConfirmed) {
+            await deleteMenuItem(item.id)
+            Swal.fire({
+                title: "Deketed",
+                text: "Your file has beedn deleted",
+                icon: "success"
+            })
+        }
+          
+    }
+    const handleEditMenuItem = async (item) => {
+        setSelectedMenuItem(item)
+        setFormData({
+            name: item.name||"",
+            description: item.description || "",
+            specialTag: item.specialTag || "",
+            category: item.category || "",
+            price: item.price || "",
+            image:null
+            })
+        setShowModal(true)
+
+    }
+    const handleOnSubmit =async  (formData) => {
+        setIsSubmitting(true)
+        try {
+            const formDataToSend = new FormData();
+            formDataToSend.append("Name", formData.name)
+            formDataToSend.append("Category", formData.category)
+            formDataToSend.append("Description", formData.description)
+            formDataToSend.append("Price", formData.price)
+            formDataToSend.append("SpecialTag", formData.specialTag)
+            if (formData.image) {
+                formDataToSend.append("File", formData.image)
+            }
+
+            if (selectedMenuItem) {
+                formDataToSend.append("Id", selectedMenuItem.id)
+
+            }
+
+
+            let result
+
+            if (selectedMenuItem) {
+                result = await editMenuItem({ id:selectedMenuItem.id,formData: formDataToSend })
+                if (result.isSuccess !== false) {
+                    toast.success("item udpated succesffully")
+                    refetch()
+                } else {
+                    toast.error("item update failed")
+
+                }
+            } else {
+
+            result = await createMenuItem(formDataToSend)
+           
+            if (result.isSuccess !== false) {
+                toast.success("item created succesffully")
+                refetch()
+            } else {
+                toast.error("item creation failed")
+
+                }
+            }
+            setShowModal(false)
+            ResetForm();
+        }
+        catch (error) {
+            console.log(error)
+        } finally {
+            setIsSubmitting(false)
+        }
+    } 
+   return (
+
+
+
+      <div className="container-fluid p-4 mx-3">
+          <div className="row mb-4">
+              <div className="col">
+                  <div className="d-flex justify-content-between align-items-center">
+                      <div>
+                          <h2>Menu Item Management</h2>
+                          <p className="text-muted mb-0">
+                              Manage your restaurant's menu items
+                          </p>
+                       </div>
+                       <button className="btn btn-primary" onClick={  handleAddMenuItem }>
+                          <i className="bi bi-plus-circle me-2"></i>
+                          Add Menu Item
+                      </button>
+                  </div>
+              </div>
+          </div>
+          <div className="row">
+              <div className="col">
+                  <div className="card">
+                      <div className="card-body">
+
+                           <MenuItemTable menuItems={menuItems} isLoading={isLoading} error={error} onDelete={handleDeleteMenuItem} onEdit={handleEditMenuItem } />
+                      </div>
+                  </div>
+              </div>
+           </div>
+           {showModal && (<MenuItemModal formData={formData} onSubmit={handleOnSubmit} onClose={handleCloseModal} isSubmitting={isSubmitting}
+               onChange={handleInputChange}
+               isEditing={!!selectedMenuItem}
+           
+           />)}
+         
+      </div>
+  );
+}
+
+export default MenuItemManagement;

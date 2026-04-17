@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReactApp1.Server.Data;
 
@@ -11,9 +12,11 @@ using ReactApp1.Server.Data;
 namespace ReactApp1.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260412151344_yyyddw")]
+    partial class yyyddw
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -434,86 +437,6 @@ namespace ReactApp1.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ReactApp1.Server.Models.Project2Exercise.OrderDetail", b =>
-                {
-                    b.Property<int>("OrderDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
-
-                    b.Property<string>("ItemName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MenuItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderHeaderId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Rating")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderDetailId");
-
-                    b.HasIndex("MenuItemId");
-
-                    b.HasIndex("OrderHeaderId");
-
-                    b.ToTable("OrderDetails");
-                });
-
-            modelBuilder.Entity("ReactApp1.Server.Models.Project2Exercise.OrderHeader", b =>
-                {
-                    b.Property<int>("OrderHeaderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderHeaderId"));
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("OrderTotal")
-                        .HasColumnType("float");
-
-                    b.Property<string>("PickUpEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PickUpName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PickUpPhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TotalItem")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderHeaderId");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("OrderHeaders");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -576,42 +499,9 @@ namespace ReactApp1.Server.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("ReactApp1.Server.Models.Project2Exercise.OrderDetail", b =>
-                {
-                    b.HasOne("ReactApp1.Server.Models.Project2Exercise.MenuItem", "MenuItem")
-                        .WithMany()
-                        .HasForeignKey("MenuItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReactApp1.Server.Models.Project2Exercise.OrderHeader", null)
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderHeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MenuItem");
-                });
-
-            modelBuilder.Entity("ReactApp1.Server.Models.Project2Exercise.OrderHeader", b =>
-                {
-                    b.HasOne("ReactApp1.Server.Models.Project2Exercise.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-                });
-
             modelBuilder.Entity("ReactApp1.Server.Models.Project1VendingMachine.Category", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("ReactApp1.Server.Models.Project2Exercise.OrderHeader", b =>
-                {
-                    b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
         }
